@@ -8,8 +8,8 @@ Afterwards everything is combined using `ffmpeg`.
 The filename of the video is automatically estimated based on the video title.
 
 ## Requirements
-* python3
-* ffmpeg
+* python3 (at least 3.6, 3.8 is recommended)
+* ffmpeg (4.2 recommended)
 
 
 
