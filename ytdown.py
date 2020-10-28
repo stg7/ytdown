@@ -54,7 +54,7 @@ def _get_file(url, target_filename_and_path):
     return True
 
 
-def create_filename(x):
+def get_filename(x):
     """creates a unified filename for a youtube video based on the title"""
     return x.replace(" - Youtube", "").strip().lower().replace(" ", "_").replace("\n", "")
 
@@ -71,7 +71,7 @@ def download(youtube_url):
         if m:
             title = m.group(1)
             break
-    filename = create_filename(title)
+    filename = get_filename(title)
 
     # parse the player api part of the html page
     player_api = html.split('id="player-api"')[1].split("</script>")[1]
