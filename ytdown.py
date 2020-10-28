@@ -115,7 +115,7 @@ def download(youtube_url):
 
     # combine both files to one video, and delete the audio and video parts
     print(f"combine audio and video to {filename}.mkv:")
-    os.system("""ffmpeg -i "{video_filename}" -i "{audio_filename}" -c:v copy -c:a copy {filename}.mkv """)
+    os.system(f"""ffmpeg -i "{video_filename}" -i "{audio_filename}" -c:v copy -c:a copy {filename}.mkv """)
     os.remove(video_filename)
     os.remove(audio_filename)
     return True
