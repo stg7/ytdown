@@ -12,4 +12,5 @@ The filename of the video is automatically estimated based on the video title.
 * ffmpeg (4.2 recommended)
 
 
-
+## Note
+This tool is only supposed to be scientific nature and should be used only for research purposes in case of CC0 licensed content of youtube.
