@@ -77,34 +77,35 @@ def download(youtube_url):
     player_api = html.split('id="player-api"')[1].split("</script>")[1]
 
     # normal "non-adaptive" video/audio formats
-    n_formats = re.match('.*formats\\\\":\[(.*?)\],', player_api).group(1)
+    n_formats = re.match('.*formats\\\\":\[(.*?)\],', player_api).group(1).split("]")[0]
     normal_formats = json.loads("[" + unescape(n_formats) + "]")
 
     logging.debug(json.dumps(normal_formats, indent=4))
 
     # adaptive formats
-    a_formats = re.match('.*adaptiveFormats\\\\":\[(.*?)\]}', player_api).group(1)
+    a_formats = re.match('.*adaptiveFormats\\\\":\[(.*?)\]}', player_api).group(1).split("]")[0]
     adaptive_formats = json.loads("[" + unescape(a_formats) + "]")
+
     logging.debug(json.dumps(adaptive_formats, indent=4))
     video_streams = []
     audio_streams = []
 
-    for x in adaptive_formats:
+    for x in adaptive_formats + normal_formats:
         if "video" in x["mimeType"]:
             video_streams.append(x)
         if "audio" in x["mimeType"]:
             audio_streams.append(x)
 
     # select streams for audio and video
-    max_video_height = max(video_streams, key=lambda x: x["height"])
-    max_audio_br = max(audio_streams, key=lambda x: x["averageBitrate"])
+    has_url = lambda x: "url" in x
+    max_video_height = max(filter(has_url, video_streams), key=lambda x: x["height"])
+    max_audio_br = max(filter(has_url, audio_streams), key=lambda x: x["averageBitrate"])
     print(
         f"""
     selected audio={max_audio_br["itag"]} {max_audio_br["mimeType"]}
              video={max_video_height["itag"]} {max_video_height["mimeType"]}, height={max_video_height["height"]}
     """
     )
-
     # download the files
     video_filename = filename + ".video"
     print(f"download video to {video_filename}:")
