@@ -101,7 +101,7 @@ def download(youtube_url):
     print(
         f"""
     selected audio={max_audio_br["itag"]} {max_audio_br["mimeType"]}
-             video={max_video_height["itag"]} {max_video_height["mimeType"]}
+             video={max_video_height["itag"]} {max_video_height["mimeType"]}, height={max_video_height["height"]}
     """
     )
 
